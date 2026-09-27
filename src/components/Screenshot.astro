@@ -1,0 +1,17 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  image: string;
+  label: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+const { image, label, alt, width, height } = Astro.props;
+const source = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}media/${image}.webp`;
+---
+<a class="screenshot-link" href={source} data-zoom={source} data-alt={alt} aria-label={`放大${label}截图`}>
+  <img src={source} width={width} height={height} alt={alt} loading="lazy" decoding="async" />
+  <span class="screenshot-zoom"><Icon name="arrowsOut" /></span>
+</a>

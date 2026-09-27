@@ -1,0 +1,18 @@
+---
+import arrowRight from '@phosphor-icons/core/assets/regular/arrow-right.svg?raw';
+import arrowUpRight from '@phosphor-icons/core/assets/regular/arrow-up-right.svg?raw';
+import arrowsOut from '@phosphor-icons/core/assets/regular/arrows-out-simple.svg?raw';
+import caretDown from '@phosphor-icons/core/assets/regular/caret-down.svg?raw';
+import check from '@phosphor-icons/core/assets/regular/check.svg?raw';
+import code from '@phosphor-icons/core/assets/regular/code.svg?raw';
+import github from '@phosphor-icons/core/assets/regular/github-logo.svg?raw';
+import shield from '@phosphor-icons/core/assets/regular/shield-check.svg?raw';
+import wind from '@phosphor-icons/core/assets/regular/wind.svg?raw';
+import windows from '@phosphor-icons/core/assets/regular/windows-logo.svg?raw';
+import x from '@phosphor-icons/core/assets/regular/x.svg?raw';
+
+const icons = { arrowRight, arrowUpRight, arrowsOut, caretDown, check, code, github, shield, wind, windows, x };
+interface Props { name: keyof typeof icons; class?: string }
+const { name, class: className = '' } = Astro.props;
+---
+<span class:list={['icon', className]} aria-hidden="true" set:html={icons[name]} />

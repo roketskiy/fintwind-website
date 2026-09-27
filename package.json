@@ -1,0 +1,26 @@
+{
+  "name": "fintwind-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "assets": "node scripts/prepare-assets.mjs",
+    "check": "astro check",
+    "build": "bun run assets && astro build",
+    "preview": "astro preview --host 127.0.0.1 --port 4173",
+    "test:e2e": "playwright test",
+    "audit": "node scripts/audit.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "^5.2.8",
+    "@phosphor-icons/core": "^2.1.1",
+    "astro": "^6.3.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@axe-core/playwright": "^4.11.0",
+    "@playwright/test": "^1.58.2",
+    "lighthouse": "^13.0.3",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.3"
+  }
+}
