@@ -14,7 +14,9 @@ bun run preview
 
 打开 <http://127.0.0.1:4173>。`preview` 只服务构建产物，不启动 watcher。
 
-构建需要可运行的 FFmpeg（放在 PATH 中，或设置 `FFMPEG_PATH` 为可执行文件绝对路径）。构建时从仓库的 `page/` 读取原始素材，生成 `public/media/`：截图转换为 WebP，`page/会话演示.mp4` 转换为无音轨、支持快速起播的 `session-demo.mp4`，并抽取 `session-demo-poster.webp` 封面。视频处理结果按源素材与脚本修改时间缓存。最终输出到 `website/dist/`，可部署到任意静态站点服务。原始素材需随源码提供；生成图片和视频不重复提交。
+构建需要可运行的 FFmpeg（放在 PATH 中，或设置 `FFMPEG_PATH` 为可执行文件绝对路径）。构建时从仓库的 `page/` 读取原始素材，生成 `public/media/`：截图转换为 WebP，`page/会话演示.mp4` 转换为无音轨、支持快速起播的 `session-demo.mp4`，并抽取 `session-demo-poster.webp` 封面。视频处理结果按源素材与脚本修改时间缓存。最终输出到 `website/dist/`，可部署到任意静态站点服务。原始素材需随源码提供。
+
+`public/media/` 的生成产物**提交入库**：Cloudflare Pages 等托管构建环境没有 FFmpeg，入库后部署构建可直接使用现成产物（部署构建命令跳过素材脚本，只执行 `astro build`）。更新原始素材后，在本地运行 `bun run build` 重新生成，并把 `public/media/` 的变更一并提交。
 
 若部署到子路径，在构建环境中设置 `SITE_BASE`（例如 `/fintwind/`）。若使用 Open Graph 社交分享图，部署时可按最终域名补充绝对 `og:image` URL；页面未假设尚未提供的正式域名。
 
