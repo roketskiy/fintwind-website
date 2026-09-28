@@ -44,7 +44,7 @@ export const gallery = [
 export const questions = [
   {
     title: '需要先安装 OpenCode 吗？',
-    answer: '需要。Fintwind 使用本机 OpenCode 服务，请先安装并登录 OpenCode CLI。Fintwind 0.2.1 支持 OpenCode v2.0.16 及更早的兼容版本，具体以版本说明为准。',
+    answer: '需要。Fintwind 使用本机 OpenCode 服务，请先安装并登录 OpenCode CLI。各版本支持的 OpenCode 范围可能不同，以对应 release 的版本说明为准。',
   },
   {
     title: '支持哪些 Windows 设备？',

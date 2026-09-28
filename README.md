@@ -22,6 +22,10 @@ bun run preview
 
 仓库连接 Cloudflare（Workers Builds）后自动部署：构建命令 `bun install --frozen-lockfile && bunx astro build`，部署命令 `npx wrangler deploy`，由根目录的 `wrangler.jsonc` 声明 `dist/` 为静态资源目录。
 
+## 版本同步
+
+`src/data/product.ts` 的 `version` 由 GitHub Actions 自动维护：主仓库 `roketskiy/fintwind` 发布正式 release 时，`notify-website.yml` 通过 `repository_dispatch` 唤起本仓库的 `sync-release.yml`，更新版本号并提交，随后 Cloudflare 自动构建上线。prerelease 不同步；FAQ 中的 OpenCode 兼容性说明为人工内容，发版后请自行核对。手动同步可在本仓库 Actions 里运行 "Sync release version"。
+
 若部署到子路径，在构建环境中设置 `SITE_BASE`（例如 `/fintwind/`）。若使用 Open Graph 社交分享图，部署时可按最终域名补充绝对 `og:image` URL；页面未假设尚未提供的正式域名。
 
 ## 检查

@@ -1,0 +1,65 @@
+name: Sync release version
+
+on:
+  repository_dispatch:
+    types: [release-published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to sync, without the v prefix. Defaults to the latest release of the main repository.'
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-release
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: resolve
+        run: |
+          input='${{ github.event.inputs.version || github.event.client_payload.version || '' }}'
+          if [ -n "$input" ]; then
+            version="${input#v}"
+          else
+            tag=$(curl -fsSL "https://api.github.com/repos/${{ github.repository_owner }}/fintwind/releases/latest" | jq -r '.tag_name // empty')
+            if [ -z "$tag" ]; then
+              echo "No published release found in the main repository"
+              exit 1
+            fi
+            version="${tag#v}"
+          fi
+          if ! echo "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+'; then
+            echo "Unexpected version format: $version"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Update product.ts
+        id: update
+        run: |
+          file=src/data/product.ts
+          current=$(sed -n "s/^export const version = '\([^']*\)'.*/\1/p" "$file")
+          echo "current=$current latest=${{ steps.resolve.outputs.version }}"
+          if [ "$current" = "${{ steps.resolve.outputs.version }}" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            sed -i "s|^export const version = .*|export const version = '${{ steps.resolve.outputs.version }}'|" "$file"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push
+        if: steps.update.outputs.changed == 'true'
+        run: |
+          git config user.name "fintwind-release-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/data/product.ts
+          git commit -m "chore: 同步版本号到 v${{ steps.resolve.outputs.version }}（来自主仓库 release）"
+          git push
