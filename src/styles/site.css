@@ -56,17 +56,19 @@ h1, h2, h3 { text-wrap: balance; }
 .button-quiet .icon { width: 1.4em; height: 1.4em; }
 .icon-button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); }
 .icon-button:hover { background: var(--accent-soft); }
-.hero { display: flex; flex-direction: column; align-items: center; gap: 52px; padding-block: 64px 88px; }
+.hero { position: relative; display: flex; flex-direction: column; align-items: center; gap: 52px; padding-block: 64px 88px; }
+.hero-ascii { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 .hero-copy { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
 .eyebrow { display: flex; align-items: center; justify-content: center; gap: 9px; margin-bottom: 28px; color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: 0.055em; }
 .eyebrow .icon { font-size: 18px; }
-h1 { font-size: clamp(48px, 4.6vw, 66px); font-weight: 700; line-height: 1.25; letter-spacing: -0.065em; }
-h1 span { display: block; color: var(--accent); }
+h1 { font-size: clamp(58px, 7.5vw, 104px); font-weight: 800; line-height: 1.02; letter-spacing: -0.04em; }
+.hero-tagline { margin-top: 20px; font-size: clamp(26px, 2.9vw, 42px); font-weight: 650; line-height: 1.35; letter-spacing: -0.02em; }
+.hero-tagline span { display: block; color: var(--accent); }
 .hero-description { max-width: 34em; margin-top: 26px; font-size: 15px; line-height: 1.95; color: var(--muted); }
 .hero-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
 .hero-actions .button { padding-inline: 16px; font-size: 13px; }
 .hero-actions .button-solid > .icon:last-child { display: none; }
-.hero-visual { min-width: 0; width: 100%; }
+.hero-visual { position: relative; z-index: 1; min-width: 0; width: 100%; }
 .demo-stage { position: relative; aspect-ratio: 1440 / 856; border: 1px solid var(--line); border-radius: 16px; background: var(--image-stage); box-shadow: 0 20px 44px -20px var(--shadow); }
 .demo-video { display: block; width: 100%; height: 100%; border-radius: inherit; object-fit: contain; pointer-events: none; }
 .demo-still { display: none; position: absolute; inset: 0; width: 100%; height: 100%; border-radius: inherit; object-fit: contain; }
@@ -241,6 +243,7 @@ details[open] > summary .icon { transform: rotate(180deg); }
   .nav-actions { margin-left: auto; gap: 4px; }
   .nav-download { font-size: 10px; min-height: 40px; padding-inline: 10px; }
   .hero { gap: 26px; padding-block: 36px 42px; }
+  .hero-tagline { font-size: clamp(21px, 5.6vw, 27px); }
   .eyebrow { font-size: 11px; margin-bottom: 22px; }
   h1 { font-size: clamp(48px, 12vw, 68px); line-height: 1.2; }
   .hero-description { font-size: 13px; margin-top: 23px; line-height: 1.95; }

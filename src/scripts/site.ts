@@ -110,3 +110,111 @@ if (!reducedMotion.matches && 'IntersectionObserver' in window) {
     document.querySelectorAll('.reveal-ready').forEach(element => element.classList.add('is-revealed'));
   });
 }
+
+// ASCII wind field in the hero: a quiet grid of terminal glyphs that ripples
+// around the pointer. Desktop pointers only; static or absent otherwise.
+const asciiCanvas = document.querySelector<HTMLCanvasElement>('#hero-ascii');
+const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+if (asciiCanvas && !reducedMotion.matches && finePointer.matches) {
+  const ctx = asciiCanvas.getContext('2d');
+  const hero = asciiCanvas.closest<HTMLElement>('.hero');
+  if (ctx && hero) {
+    const CELL = 18;
+    const RADIUS = 150;
+    type Glyph = { x: number; y: number; jitter: number };
+    let glyphs: Glyph[] = [];
+    let width = 0;
+    let height = 0;
+    let raf = 0;
+    let running = false;
+    const pointer = { x: -9999, y: -9999, targetX: -9999, targetY: -9999, inside: false };
+
+    function rebuild() {
+      const rect = hero!.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = rect.width;
+      height = rect.height;
+      asciiCanvas!.width = Math.round(width * dpr);
+      asciiCanvas!.height = Math.round(height * dpr);
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+      glyphs = [];
+      const cols = Math.ceil(width / CELL);
+      const rows = Math.ceil(height / CELL);
+      for (let row = 0; row < rows; row += 1) {
+        for (let col = 0; col < cols; col += 1) {
+          glyphs.push({
+            x: col * CELL + CELL / 2,
+            y: row * CELL + CELL / 2,
+            jitter: Math.random() * Math.PI * 2,
+          });
+        }
+      }
+    }
+
+    function frame(now: number) {
+      const time = now / 1000;
+      pointer.x += (pointer.targetX - pointer.x) * 0.14;
+      pointer.y += (pointer.targetY - pointer.y) * 0.14;
+      ctx!.clearRect(0, 0, width, height);
+      ctx!.font = '600 13px ui-monospace, Consolas, "SF Mono", monospace';
+      ctx!.textAlign = 'center';
+      ctx!.textBaseline = 'middle';
+      ctx!.fillStyle = '#176441';
+      for (const glyph of glyphs) {
+        const wave = Math.sin(glyph.x * 0.012 + time * 1.3 + Math.sin(glyph.y * 0.02 + time * 0.6) * 1.1 + glyph.jitter * 0.12);
+        const dx = glyph.x - pointer.x;
+        const dy = glyph.y - pointer.y;
+        const distance = Math.hypot(dx, dy);
+        const reach = Math.max(0, 1 - distance / RADIUS);
+        const boost = reach * reach;
+        const alpha = 0.045 + 0.05 * (0.5 + 0.5 * wave) + boost * 0.6;
+        if (alpha < 0.02) continue;
+        const push = boost * 5;
+        const ox = distance > 0.001 ? (dx / distance) * push : 0;
+        const oy = distance > 0.001 ? (dy / distance) * push : 0;
+        ctx!.globalAlpha = Math.min(alpha, 0.8);
+        ctx!.fillText(boost > 0.35 ? '_' : '>', glyph.x + ox, glyph.y + oy);
+      }
+      ctx!.globalAlpha = 1;
+      raf = requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (running) return;
+      running = true;
+      raf = requestAnimationFrame(frame);
+    }
+
+    function stop() {
+      running = false;
+      cancelAnimationFrame(raf);
+    }
+
+    rebuild();
+    window.addEventListener('resize', rebuild);
+    hero.addEventListener('pointermove', event => {
+      const rect = asciiCanvas!.getBoundingClientRect();
+      pointer.targetX = event.clientX - rect.left;
+      pointer.targetY = event.clientY - rect.top;
+      pointer.inside = true;
+    });
+    hero.addEventListener('pointerleave', () => {
+      pointer.inside = false;
+      pointer.targetX = -9999;
+      pointer.targetY = -9999;
+    });
+    new IntersectionObserver(entries => {
+      const visible = entries.some(entry => entry.isIntersecting);
+      if (visible && document.visibilityState === 'visible' && !reducedMotion.matches) start();
+      else stop();
+    }, { threshold: 0 }).observe(hero);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && !reducedMotion.matches) start();
+      else stop();
+    });
+    reducedMotion.addEventListener('change', event => {
+      if (event.matches) stop();
+    });
+    start();
+  }
+}
