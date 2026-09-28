@@ -18,6 +18,10 @@ bun run preview
 
 `public/media/` 的生成产物**提交入库**：Cloudflare Pages 等托管构建环境没有 FFmpeg，入库后部署构建可直接使用现成产物（部署构建命令跳过素材脚本，只执行 `astro build`）。更新原始素材后，在本地运行 `bun run build` 重新生成，并把 `public/media/` 的变更一并提交。
 
+## 部署
+
+仓库连接 Cloudflare（Workers Builds）后自动部署：构建命令 `bun install --frozen-lockfile && bunx astro build`，部署命令 `npx wrangler deploy`，由根目录的 `wrangler.jsonc` 声明 `dist/` 为静态资源目录。
+
 若部署到子路径，在构建环境中设置 `SITE_BASE`（例如 `/fintwind/`）。若使用 Open Graph 社交分享图，部署时可按最终域名补充绝对 `og:image` URL；页面未假设尚未提供的正式域名。
 
 ## 检查
