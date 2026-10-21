@@ -6,17 +6,39 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": true
   },
-  "d1_databases": [{
-    "binding": "ACTIVITY_DB",
-    "database_name": "fintwind-activity",
-    "database_id": "7f684266-1887-49f8-a89f-cb021ba37d7c",
-    "migrations_dir": "migrations"
-  }],
+  "d1_databases": [
+    {
+      "binding": "ACTIVITY_DB",
+      "database_name": "fintwind-activity",
+      "database_id": "7f684266-1887-49f8-a89f-cb021ba37d7c",
+      "migrations_dir": "migrations"
+    }
+  ],
   "observability": {
     "enabled": true,
-    "logs": { "enabled": true, "invocation_logs": false },
-    "traces": { "enabled": false }
-  }
+    "logs": {
+      "enabled": true,
+      "invocation_logs": false
+    },
+    "traces": {
+      "enabled": false
+    }
+  },
+  "secrets": {
+    "required": [
+      "ADMIN_PASSWORD"
+    ]
+  },
+  "ratelimits": [
+    {
+      "name": "ADMIN_LOGIN_LIMITER",
+      "namespace_id": "538121",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ]
 }

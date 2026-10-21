@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS admin_sessions (
+  token_hash TEXT PRIMARY KEY NOT NULL,
+  expires_at INTEGER NOT NULL
+) WITHOUT ROWID;
+CREATE INDEX IF NOT EXISTS admin_sessions_expiry ON admin_sessions (expires_at);

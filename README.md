@@ -56,4 +56,4 @@ bun run audit
 
 ## 应用活跃统计
 
-Cloudflare Worker 接收匿名启动消息，D1 按北京时间每日去重。统计只在 Cloudflare D1 Studio 查看。首次部署前需创建 D1 并替换数据库 ID，完整步骤和统计口径见 [ACTIVITY.md](ACTIVITY.md)。
+Cloudflare Worker 接收匿名启动消息，D1 按北京时间每日去重。统计页位于 `/admin/`，管理员密码登录后直接查看今日 DAU 和历史趋势，无需编写查询。生产 D1 已配置，首次开放统计页还需应用会话迁移并设置 `ADMIN_PASSWORD`。使用方式、配置步骤和统计口径见 [ACTIVITY.md](ACTIVITY.md)。

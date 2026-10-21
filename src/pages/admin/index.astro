@@ -1,0 +1,90 @@
+---
+import appIconUrl from '../../../assets/icons/fintwind-logo.svg?url';
+import '@fontsource-variable/manrope';
+import '../../styles/admin.css';
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="color-scheme" content="light" />
+    <title>用户统计 | Fintwind</title>
+    <link rel="icon" type="image/svg+xml" href={appIconUrl} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到统计</a>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="/" aria-label="Fintwind 首页">
+          <img src={appIconUrl} width="28" height="28" alt="" />
+          <span>fintwind</span>
+        </a>
+        <button id="logout" class="quiet-link" type="button">退出登录</button>
+      </div>
+    </header>
+    <main id="main" class="container">
+      <div class="page-heading">
+        <div>
+          <h1>用户统计</h1>
+          <p class="muted">北京时间 · 每日去重安装数</p>
+        </div>
+        <button id="refresh" type="button" disabled>刷新</button>
+      </div>
+
+      <div id="status" class="status" role="status" aria-live="polite">正在加载统计…</div>
+      <div id="recovery" class="recovery" hidden>
+        <button id="retry" type="button">重试</button>
+      </div>
+
+      <div id="statistics" aria-busy="true" hidden>
+        <section class="metrics" aria-label="每日活跃安装数">
+          <div class="metric metric-primary">
+            <h2>今日 DAU</h2>
+            <p id="today-dau" class="metric-value"></p>
+            <p id="today-date" class="muted metric-date"></p>
+          </div>
+          <div class="metric">
+            <h2>昨日 DAU</h2>
+            <p id="yesterday-dau" class="metric-value"></p>
+            <p id="yesterday-date" class="muted metric-date"></p>
+          </div>
+        </section>
+
+        <div class="data-grid">
+          <section class="panel trend" aria-labelledby="trend-title">
+            <div class="panel-heading">
+              <h2 id="trend-title">日活趋势</h2>
+              <label class="range-label" for="days">
+                <span class="sr-only">统计范围</span>
+                <select id="days" name="days" disabled>
+                  <option value="7">最近 7 天</option>
+                  <option value="30" selected>最近 30 天</option>
+                  <option value="90">最近 90 天</option>
+                </select>
+              </label>
+            </div>
+            <p id="period" class="muted period"></p>
+            <div id="chart" class="chart"></div>
+            <p id="zero-state" class="muted zero-state" hidden>所选日期暂无活跃上报。</p>
+          </section>
+
+          <section class="panel daily" aria-labelledby="daily-title">
+            <div class="panel-heading"><h2 id="daily-title">每日明细</h2></div>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="每日活跃安装数明细">
+              <table>
+                <caption class="sr-only">所选日期每日活跃安装数，按日期倒序</caption>
+                <thead><tr><th scope="col">日期</th><th scope="col">DAU</th></tr></thead>
+                <tbody id="daily-rows"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+        <p class="updated muted">更新于 <time id="updated-at"></time></p>
+      </div>
+      <noscript><p class="status">请启用 JavaScript 查看统计。</p></noscript>
+    </main>
+    <script src="../../scripts/admin.ts"></script>
+  </body>
+</html>

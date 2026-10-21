@@ -1,0 +1,40 @@
+---
+import appIconUrl from '../../../../assets/icons/fintwind-logo.svg?url';
+import '@fontsource-variable/manrope';
+import '../../../styles/admin.css';
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="color-scheme" content="light" />
+    <title>后台登录 | Fintwind</title>
+    <link rel="icon" type="image/svg+xml" href={appIconUrl} />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="/" aria-label="Fintwind 首页">
+          <img src={appIconUrl} width="28" height="28" alt="" />
+          <span>fintwind</span>
+        </a>
+      </div>
+    </header>
+    <main class="container login-main">
+      <div class="login-panel">
+        <h1>后台登录</h1>
+        <form id="login-form" method="post" action="/admin/api/login" aria-busy="false">
+          <label for="password">管理员密码</label>
+          <input id="password" name="password" type="password" autocomplete="current-password"
+            required maxlength="256" aria-describedby="login-status" />
+          <button id="login-submit" type="submit">登录</button>
+          <p id="login-status" class="login-status" role="status" aria-live="polite"></p>
+        </form>
+        <noscript><p class="status">请启用 JavaScript 登录。</p></noscript>
+      </div>
+    </main>
+    <script src="../../../scripts/admin-login.ts"></script>
+  </body>
+</html>
