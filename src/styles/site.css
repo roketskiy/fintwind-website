@@ -6,12 +6,12 @@
   --surface: #ffffff;
   --text: #202823;
   --muted: #5b655f;
-  --accent: #176441;
+  --accent: #1e1e1e;
   --on-accent: #ffffff;
-  --accent-soft: #f1f6f2;
+  --accent-soft: #f4f4f4;
   --line: #e3e7e4;
   --image-stage: #f6f7f6;
-  --shadow: #24352914;
+  --shadow: #1a1a1a14;
   --font: 'Manrope Variable', 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
   font-family: var(--font);
   font-synthesis: none;

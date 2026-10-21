@@ -159,7 +159,7 @@ if (asciiCanvas && !reducedMotion.matches && finePointer.matches) {
       ctx!.font = '600 13px ui-monospace, Consolas, "SF Mono", monospace';
       ctx!.textAlign = 'center';
       ctx!.textBaseline = 'middle';
-      ctx!.fillStyle = '#176441';
+      ctx!.fillStyle = '#1e1e1e';
       for (const glyph of glyphs) {
         const wave = Math.sin(glyph.x * 0.012 + time * 1.3 + Math.sin(glyph.y * 0.02 + time * 0.6) * 1.1 + glyph.jitter * 0.12);
         const dx = glyph.x - pointer.x;
