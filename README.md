@@ -53,3 +53,7 @@ bun run audit
 - 素材映射、WebP 生成与视频压缩：`scripts/prepare-assets.mjs`。
 
 下载链接使用 `src/data/product.ts` 的 `version`，由 GitHub Actions 随正式 release 更新，无需手动修改版本号。发布新版本后，核对 FAQ 中的 OpenCode 兼容说明。页面不展示具体内存或性能数字。演示为非交互的静音循环视频，没有播放器控制条或点击、快捷键暂停行为；离开视口、切到后台或打开原图弹窗时自动暂停，减弱动态效果模式显示静帧。
+
+## 应用活跃统计
+
+Cloudflare Worker 接收匿名启动消息，D1 按北京时间每日去重。统计只在 Cloudflare D1 Studio 查看。首次部署前需创建 D1 并替换数据库 ID，完整步骤和统计口径见 [ACTIVITY.md](ACTIVITY.md)。
