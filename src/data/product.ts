@@ -44,11 +44,19 @@ export const gallery = [
 export const questions = [
   {
     title: '需要先安装 OpenCode 吗？',
-    answer: '需要。Fintwind 使用本机 OpenCode 服务，请先安装并登录 OpenCode CLI。各版本支持的 OpenCode 范围可能不同，以对应 release 的版本说明为准。',
+    answer: '需要。Fintwind 2 使用本机 OpenCode 2 服务，不支持 OpenCode 1.x。请先安装并登录 OpenCode 2 命令行工具。已验证 OpenCode 2.0.27 的 Goal 模式与 2.0.32 的 Mermaid 提示词与校验工具，完整兼容区间尚未验证。',
   },
   {
     title: '支持哪些 Windows 设备？',
     answer: '支持 Windows 10 1809 及更新版本、Windows 11，提供 x64 和 ARM64 版本。安装不需要管理员权限。使用便携版时，将 fintwind.exe 和 fintwind-daemon.exe 保留在同一目录即可。',
+  },
+  {
+    title: '能按计划自动执行任务吗？',
+    answer: '可以。从侧边栏时钟图标或命令面板进入「定时任务」，按星期与时间或固定间隔执行指令。任务可新建会话并指定项目、模型与权限，也可复用已有会话，支持暂停、恢复、立即运行与删除。Fintwind 完全退出后任务不会执行，错过的运行不会补跑。',
+  },
+  {
+    title: '支持 Mermaid 图表吗？',
+    answer: '支持。对话记录可直接查看流程图、时序图、类图、状态图、实体关系图、饼图与甘特图。图表在本地编译，跟随主题、字号与高 DPI 缩放，不需要联网或运行 JavaScript。编译失败时保留源码，并显示原因与行列位置。',
   },
   {
     title: 'Fintwind 收费吗？',
