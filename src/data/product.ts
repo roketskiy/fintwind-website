@@ -1,5 +1,5 @@
 export const repository = 'https://github.com/roketskiy/fintwind';
-export const version = '2.0.12'
+export const version = '2.0.13'
 export const release = `${repository}/releases/tag/v${version}`;
 export const downloadRoot = `${repository}/releases/download/v${version}`;
 
